@@ -1,9 +1,7 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @media screen and (max-width: 3120px) {
-  html {
-    font-family: "Plus Jakarta Sans", sans-serif;
-  }
   ::-webkit-scrollbar {
     display: none !important;
   }

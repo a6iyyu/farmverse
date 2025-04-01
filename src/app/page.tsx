@@ -10,17 +10,18 @@ import DukungPetaniBerkelanjutan from "@/components/home/dukung-petani-berkelanj
 // prettier-ignore
 export const metadata: Metadata = {
   title: "Beranda | Farmverse",
-  description: "Selamat datang di Farmverse, kami mendukung para petani untuk memaksimalkan hasil panen mereka.",
+  description: "Farmverse adalah platform inovatif yang menghubungkan pelaku usaha agrikultur langsung dengan pasar dan penyedia peralatan pertanian. Bergabunglah untuk mendukung pertanian berkelanjutan dan meningkatkan kesejahteraan pelaku usaha agrikultur.",
   openGraph: {
     title: "Beranda | Farmverse",
-    description: "Selamat datang di Farmverse, kami mendukung para petani untuk memaksimalkan hasil panen mereka.",
+    description: "Farmverse adalah platform inovatif yang menghubungkan pelaku usaha agrikultur langsung dengan pasar dan penyedia peralatan pertanian. Bergabunglah untuk mendukung pertanian berkelanjutan dan meningkatkan kesejahteraan pelaku usaha agrikultur.",
   },
   twitter: {
     title: "Beranda | Farmverse",
-    description: "Selamat datang di Farmverse, kami mendukung para petani untuk memaksimalkan hasil panen mereka.",
+    description: "Farmverse adalah platform inovatif yang menghubungkan pelaku usaha agrikultur langsung dengan pasar dan penyedia peralatan pertanian. Bergabunglah untuk mendukung pertanian berkelanjutan dan meningkatkan kesejahteraan pelaku usaha agrikultur.",
   },
 };
 
+// prettier-ignore
 export default function Home() {
   return (
     <>

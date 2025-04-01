@@ -1,5 +1,14 @@
 import type { NextConfig } from "next";
+import createMDX from "@next/mdx";
 
-const nextConfig: NextConfig = {};
+const nextConfig: NextConfig = {
+  pageExtensions: ["md", "mdx", "ts", "tsx"],
+  experimental: {
+    mdxRs: true,
+    viewTransition: true,
+  },
+};
 
-export default nextConfig;
+const withMDX = createMDX({});
+
+export default withMDX(nextConfig);

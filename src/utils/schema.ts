@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export class Auth {
+export class Schema {
   static Login = z.object({
     username: z.string().trim().min(1, { message: "Nama pengguna tidak boleh kosong." }),
     password: z.string().trim().min(1, { message: "Kata sandi tidak boleh kosong." }),

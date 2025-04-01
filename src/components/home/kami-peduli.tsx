@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function KamiPeduli() {
   return (
-    <section className="mt-20 bg-gradient-to-br from-amber-700 to-amber-800 py-16">
+    <section className="mt-20 bg-gradient-to-br from-amber-700 to-amber-800 py-12">
       <div className="container mx-auto grid w-[90vw] grid-cols-1 gap-12 lg:grid-cols-2">
         <Image
           height={1000}
@@ -17,12 +17,9 @@ export default function KamiPeduli() {
           loading="lazy"
         />
         <figure>
-          <h2 className="cursor-default text-2xl leading-tight font-light tracking-tight text-gray-50 md:text-3xl lg:text-4xl">
-            Kami Peduli pada Pertanian Anda{" "}
-            <strong className="inline-flex items-end font-semibold">
-              dengan sepenuh hati
-              <Sprout size={40} className="ml-3" />
-            </strong>
+          <h2 className="mb-4 inline-flex flex-wrap items-center text-xl leading-tight font-light tracking-tight whitespace-nowrap text-gray-50 lg:text-3xl">
+            Kami peduli pada pertanian Anda <strong>dengan sepenuh hati</strong>
+            <Sprout size={28} className="ml-1 lg:ml-3" />
           </h2>
           <br />
           <figcaption className="cursor-default text-justify leading-relaxed tracking-wide text-gray-300">

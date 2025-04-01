@@ -1,18 +1,18 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Blog | Farmverse",
+  title: "Karir | Farmverse",
   description: "",
   openGraph: {
-    title: "Blog | Farmverse",
+    title: "Karir | Farmverse",
     description: "",
   },
   twitter: {
-    title: "Blog | Farmverse",
+    title: "Karir | Farmverse",
     description: "",
   },
 };
 
-export default function Blog() {
+export default function Career() {
   return null;
 }

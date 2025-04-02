@@ -1,3 +1,5 @@
+"use client";
+
 import { FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa6";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,7 +18,7 @@ export default function Footer() {
             className="w-50"
             loading="lazy"
           />
-          <p className="mt-6 cursor-default text-slate-200 lg:ml-3">
+          <p className="mt-6 cursor-default text-slate-200">
             Farmverse berupaya mendukung ketahanan pangan berkelanjutan demi
             masa depan Indonesia yang lebih baik untuk generasi mendatang.
           </p>

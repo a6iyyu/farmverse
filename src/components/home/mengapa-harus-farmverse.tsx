@@ -1,6 +1,6 @@
 "use client";
 
-import { ReasonProps } from "@/data/home";
+import { Reason as ReasonProps } from "@/data/home";
 import Image from "next/image";
 
 // prettier-ignore

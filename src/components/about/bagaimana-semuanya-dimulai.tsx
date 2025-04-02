@@ -2,16 +2,16 @@ import { LandPlot } from "lucide-react";
 
 export default function BagaimanaSemuanyaDimulai() {
   return (
-    <section className="container mx-auto my-10 w-[85vw] cursor-default lg:w-[90vw]">
-      <h3 className="mb-4 inline-flex flex-wrap items-center text-3xl font-bold tracking-tight whitespace-nowrap text-gray-800">
+    <section className="container mx-auto mt-10 w-[85vw] cursor-default lg:w-[90vw]">
+      <h3 className="mb-4 inline-flex flex-wrap items-center text-xl font-bold tracking-tight whitespace-nowrap text-gray-800 md:text-2xl lg:text-3xl">
         Bagaimana Semuanya{" "}
-        <span className="text-amber-600 underline decoration-wavy lg:ml-1">
+        <span className="ml-1 text-amber-600 underline decoration-wavy">
           Dimulai?
         </span>
-        <LandPlot size={40} className="ml-3" />
+        <LandPlot size={40} className="ml-3 hidden lg:block" />
       </h3>
-      <div className="grid grid-cols-1 gap-8 text-justify text-gray-600 lg:grid-cols-2">
-        <p className="prose">
+      <div className="grid grid-cols-1 gap-4 text-justify text-sm leading-relaxed text-gray-600 lg:grid-cols-2 lg:gap-8 lg:text-base">
+        <p>
           Banyak pelaku agrikultur kesulitan menyalurkan hasil panen mereka
           karena perantara calo yang menekan harga. Selain itu, akses ke
           peralatan pertanian berkualitas masih menjadi kendala utama. Masalah
@@ -21,7 +21,7 @@ export default function BagaimanaSemuanyaDimulai() {
           alat pertanian. Dari sinilah Farmverse lahir sebagai jawaban atas
           tantangan tersebut.
         </p>
-        <p className="prose">
+        <p>
           Farmverse hadir sebagai ekosistem digital yang menghubungkan petani,
           penyedia alat pertanian, dan bank sampah. Dengan teknologi, kami
           menciptakan sistem pertanian yang lebih adil, berkelanjutan, dan

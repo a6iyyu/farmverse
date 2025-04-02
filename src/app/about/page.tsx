@@ -1,7 +1,5 @@
 import { Metadata } from "next";
-import Hero from "@/components/about/hero";
-import BagaimanaSemuanyaDimulai from "@/components/about/bagaimana-semuanya-dimulai";
-import MenataMasaDepanAgrikultur from "@/components/about/menata-masa-depan-agrikultur";
+import Client from "./client";
 
 // prettier-ignore
 export const metadata: Metadata = {
@@ -18,11 +16,5 @@ export const metadata: Metadata = {
 };
 
 export default function About() {
-  return (
-    <>
-      <Hero />
-      <BagaimanaSemuanyaDimulai />
-      <MenataMasaDepanAgrikultur />
-    </>
-  );
+  return <Client />;
 }

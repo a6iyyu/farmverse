@@ -1,14 +1,14 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Karir | Farmverse",
+  title: "Karir",
   description: "",
   openGraph: {
-    title: "Karir | Farmverse",
+    title: "Karir",
     description: "",
   },
   twitter: {
-    title: "Karir | Farmverse",
+    title: "Karir",
     description: "",
   },
 };

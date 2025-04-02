@@ -5,15 +5,16 @@ import Link from "next/link";
 import Image from "next/image";
 import HamburgerMenu from "./hamburger-menu";
 
-// prettier-ignore
 export default function Header() {
   const [headerSticky, setHeaderSticky] = useState<boolean>(false);
+
   useEffect(() => {
     window.addEventListener("scroll", () => setHeaderSticky(window.scrollY > 5));
+    return () => window.removeEventListener("scroll", () => setHeaderSticky(window.scrollY > 5));
   });
 
   return (
-    <header className={`fixed top-0 z-50 flex w-full items-center justify-between px-8 py-4 transition-colors duration-300 ${headerSticky ? "bg-slate-50 font-semibold shadow-2xl" : "bg-none font-semibold text-white"}`}>
+    <header className={`fixed top-0 z-50 flex w-full items-center justify-between px-8 py-4 font-semibold transition-colors duration-300 ${headerSticky ? "bg-slate-50 text-black shadow-2xl" : "bg-none text-amber-500"}`}>
       <Link href="/">
         <Image
           height={1000}

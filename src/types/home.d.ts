@@ -1,12 +1,6 @@
 import { ReactElement } from "react";
 
-export interface IFitur {
-  icon: string;
-  title: string;
-  description: string;
-}
-
-export interface IHero {
+export interface Hero {
   id: number;
   title: string;
   description: string;
@@ -14,7 +8,7 @@ export interface IHero {
   image: string;
 }
 
-export interface IWeAreCaring {
+export interface WeAreCaring {
   icon: ReactElement;
   title: string;
   description: string;

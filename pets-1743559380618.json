@@ -1,0 +1,20 @@
+[
+  {
+    "color": "white",
+    "type": "chicken",
+    "size": "nano",
+    "name": "Abrahen Lincoln"
+  },
+  {
+    "color": "green",
+    "type": "deno",
+    "size": "nano",
+    "name": "Deno the Dino"
+  },
+  {
+    "color": "brown",
+    "type": "panda",
+    "size": "nano",
+    "name": "Hana"
+  }
+]

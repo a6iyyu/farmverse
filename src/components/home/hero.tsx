@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
-import { HeroProps } from "@/data/home";
+import { Hero as HeroProps } from "@/data/home";
 import { Pagination } from "@/components/home/pagination";
 
 // prettier-ignore

@@ -21,7 +21,7 @@ export default function Header() {
           width={1000}
           src="/ikon.png"
           alt="Ikon"
-          className="h-fit w-20 lg:w-40"
+          className="h-fit w-24 lg:w-40"
           loading="lazy"
         />
       </Link>

@@ -28,8 +28,9 @@ export default function Hero() {
   };
 
   useEffect(() => {
-    return () => clearInterval(setInterval(nextSlide, 5000));
-  }, [nextSlide]);
+    const interval = setInterval(nextSlide, 5000);
+    return () => clearInterval(interval);
+  });
 
   return (
     <section className="relative mx-auto h-[calc(100vh-4rem)] w-full overflow-hidden lg:h-screen">

@@ -76,7 +76,7 @@ export class Auth {
   public static async Logout() {
     try {
       (await cookies()).set("token", "", { expires: new Date(0), httpOnly: true, secure: true, sameSite: "lax" });
-      return redirect("/auth/login");
+      return redirect("/auth/loginw");
     } catch (error) {
       console.error("Terjadi kesalahan saat keluar dari akun Anda: ", error);
     }

@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import Hero from "@/components/service/hero";
 import TigaPilarKeunggulanKami from "@/components/service/tiga-pilar-keunggulan-kami";
 import LayananKami from "@/components/service/layanan-kami";
+import FarmverseVersusPlatformLain from "@/components/service/farmverse-versus-platform-lain";
+import TabelPerbandingan from "@/components/service/tabel-perbandingan";
 
 // prettier-ignore
 export const metadata: Metadata = {
@@ -23,6 +25,8 @@ export default function Service() {
       <Hero />
       <TigaPilarKeunggulanKami />
       <LayananKami />
+      <FarmverseVersusPlatformLain />
+      <TabelPerbandingan />
     </>
   );
 }

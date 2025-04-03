@@ -6,8 +6,14 @@ export interface Advantages {
   advantage: string;
 }
 
+export interface Comparison {
+  category: string;
+  farmverse: string;
+  others: string;
+}
+
 export interface Services {
-  icon?: ReactElement;
+  icon: ReactElement;
   title: string;
   description: string;
 }

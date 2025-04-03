@@ -20,19 +20,19 @@ export default function Hero() {
         className="absolute -right-20 bottom-0 -z-10 hidden object-cover lg:block"
         loading="lazy"
       />
-      <div className="flex w-full flex-col text-justify lg:w-[55%]">
-        <mark className="w-fit rounded-lg bg-amber-100/75 px-4 py-2 text-sm font-bold text-amber-600 capitalize">
+      <div className="flex w-full flex-col lg:w-[45%] xl:w-1/2">
+        <mark className="w-fit cursor-pointer rounded-lg bg-amber-100/75 px-4 py-2 text-sm font-bold text-amber-600 transition-colors duration-300 lg:hover:bg-amber-100">
           Siap Membantu Anda
         </mark>
         <h1 className="mt-6 text-xl font-bold md:text-2xl lg:text-3xl">
           Mendukung Pertumbuhan Agrikultur yang Berkelanjutan
         </h1>
-        <h5 className="mt-4 text-sm leading-relaxed text-gray-600 lg:text-base">
+        <h5 className="mt-4 text-justify text-sm leading-relaxed text-gray-600 lg:text-base">
           Farmverse mempermudah pelaku usaha agrikultur dalam menyalurkan hasil
           panen dan menciptakan ekosistem yang berkelanjutan. Bersama kami,
           wujudkan masa depan agrikultur yang lebih baik.
         </h5>
-        <button className="mt-4 inline-flex w-fit cursor-pointer items-center rounded-lg bg-amber-600 px-5 py-3 text-white transition-colors duration-300 lg:hover:bg-amber-500">
+        <button className="mt-8 inline-flex w-fit cursor-pointer items-center rounded-lg bg-amber-600 px-5 py-3 text-white transition-colors duration-300 lg:hover:bg-amber-500">
           <TbHandClick size={20} className="mr-3" /> Mulai Sekarang
         </button>
       </div>

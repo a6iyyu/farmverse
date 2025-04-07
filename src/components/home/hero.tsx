@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { Hero as HeroProps } from "@/data/home";
 import { Pagination } from "@/components/home/pagination";
+import Image from "next/image";
 
 // prettier-ignore
 export default function Hero() {

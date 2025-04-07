@@ -21,6 +21,7 @@ export async function Login(prev: { error?: Record<string, string>, redirect?: s
     });
 
     const { role } = result.data;
+    if (!role) throw new Error("Peran Anda tidak ditemukan.");
 
     (await cookies()).set("access_token", result.data.access_token, {
       httpOnly: true,
@@ -38,6 +39,7 @@ export async function Login(prev: { error?: Record<string, string>, redirect?: s
       secure: process.env.NODE_ENV === "production",
     });
 
+    if (!["FARMER", "BANK", "ADMIN"].includes(role)) throw new Error("Peran Anda tidak valid.");
     return { redirect: `/${role.toLowerCase()}` };
   } catch (error) {
     if (error instanceof Error) return { error: { form: error.message } };

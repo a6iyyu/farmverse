@@ -25,7 +25,7 @@ export class AuthService {
       if (!user) throw new Error("Akun Anda tidak ditemukan!");
       if (!(await compare(password, user.password))) throw new Error("Kata sandi yang Anda masukkan salah!");
 
-      const accessToken = await JWT.sign({ id_user: user.id_user });
+      const accessToken = await JWT.sign({ id_user: user.id_user, role: user.role });
       const refreshToken = Array.from(getRandomValues(new Uint8Array(32))).map((b) => b.toString(16).padStart(2, "0")).join("");
 
       await Prisma.sessions.deleteMany({ where: { id_user: user.id_user } });
@@ -53,12 +53,13 @@ export class AuthService {
     }
   }
 
-  public static async Register({ username, email, password, confirm_password, role }: { username: string; email: string; password: string; confirm_password: string; role: "ADMIN" | "BANK" | "FARMER" }): Promise<IRegister> {
+  public static async Register({ username, email, password, confirm_password, role }: { username: string; email: string; password: string; confirm_password: string; role: string }): Promise<IRegister> {
     try {
       const existingUser = await Prisma.users.findFirst({ where: { OR: [{ email }, { username }] } });
+      if (!["ADMIN", "BANK", "FARMER"].includes(role)) throw new Error("Peran Anda tidak valid.");
       if (password !== confirm_password) throw new Error("Konfirmasi kata sandi tidak sesuai!");
       if (existingUser) throw new Error("Pengguna sudah ada!");
-
+      
       const hashing = await hash(password, 10);
       const user = await Prisma.users.create({
         data: {
@@ -66,7 +67,7 @@ export class AuthService {
           name: username,
           email,
           password: hashing,
-          role,
+          role: role as "ADMIN" | "BANK" | "FARMER",
         },
       });
 

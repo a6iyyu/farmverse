@@ -1,7 +1,5 @@
-"use client";
-
-import { WeAreCaring } from "@/data/home";
 import { Sprout } from "lucide-react";
+import { WeAreCaring } from "@/data/home";
 import Image from "next/image";
 
 // prettier-ignore

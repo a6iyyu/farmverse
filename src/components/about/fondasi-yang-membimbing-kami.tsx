@@ -1,5 +1,3 @@
-"use client";
-
 import { Value as ValueProps } from "@/data/about";
 import Image from "next/image";
 

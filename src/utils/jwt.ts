@@ -11,7 +11,8 @@ export class JWT {
     try {
       const { payload } = await jwtVerify(token, JWT_SECRET);
       return payload as T;
-    } catch {
+    } catch (error) {
+      if (process.env.NODE_ENV !== "production") console.error(`Terdapat kesalahan pada token Anda: ${error}`);
       return null;
     }
   }

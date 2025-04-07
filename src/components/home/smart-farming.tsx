@@ -1,5 +1,3 @@
-"use client";
-
 // prettier-ignore
 export default function SmartFarming() {
   return (

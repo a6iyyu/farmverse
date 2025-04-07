@@ -1,5 +1,3 @@
-"use client";
-
 import { Reason as ReasonProps } from "@/data/home";
 import Image from "next/image";
 

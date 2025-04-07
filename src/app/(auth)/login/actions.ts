@@ -21,7 +21,15 @@ export async function Login(prev: { error?: Record<string, string> }, form: Form
       role: role.data,
     });
 
-    (await cookies()).set("token", result.data.token, {
+    (await cookies()).set("access_token", result.data.access_token, {
+      httpOnly: true,
+      path: "/",
+      maxAge: 60 * 15,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+    });
+
+    (await cookies()).set("refresh_token", result.data.refresh_token, {
       httpOnly: true,
       path: "/",
       maxAge: 60 * 60 * 24,

@@ -1,13 +1,14 @@
 "use client";
 
-import { FormEvent } from "react";
-import { useFormStatus } from "react-dom";
-import { LockKeyhole, Mail, ShieldCheck, User } from "lucide-react";
-import Text from "@/shared/form/input";
+import { useActionState } from "react";
+import { LockKeyhole, Mail, ShieldCheck, SquareUser, User } from "lucide-react";
+import { Register } from "@/app/(auth)/register/actions";
+import Text from "@/shared/form/text";
+import Select from "@/shared/form/select";
 
 // prettier-ignore
 export default function Form() {
-  const { pending } = useFormStatus();
+  const [state, action, pending] = useActionState(Register, { error: {} });
 
   return (
     <section className="bg-gradient-to-lr mx-auto flex w-4/5 flex-col items-center justify-center from-[#a9d6ff] to-[#edf2f7] bg-cover bg-center bg-no-repeat py-12 text-black lg:w-[65%]">
@@ -17,14 +18,15 @@ export default function Form() {
       <h5 className="mt-1 cursor-default text-center text-sm text-gray-600 lg:mb-6 lg:text-base">
         Bersama kita wujudkan agrikultur yang lebih adil dan berkelanjutan.
       </h5>
-      <form onSubmit={(e: FormEvent<HTMLFormElement>) => e.preventDefault()} className="w-full">
-        <div className="mt-4 space-y-5">
+      <form action={action} className="w-full">
+        <div className="mt-6 space-y-5">
           <Text
             icon={<User />}
             label="Nama Pengguna"
             name="username"
             placeholder="Masukkan nama pengguna Anda"
             autoComplete="username"
+            error={state.error?.username}
           />
           <Text
             icon={<Mail />}
@@ -33,6 +35,18 @@ export default function Form() {
             placeholder="Masukkan surel Anda"
             type="email"
             autoComplete="email"
+            error={state.error?.email}
+          />
+          <Select
+            icon={<SquareUser />}
+            label="Peran"
+            name="role"
+            placeholder="Masukkan peran Anda"
+            options={[
+              { label: "Farmer", value: "FARMER" },
+              { label: "Admin", value: "ADMIN" },
+              { label: "Bank", value: "BANK" },
+            ]}
           />
           <Text
             icon={<LockKeyhole />}
@@ -40,6 +54,7 @@ export default function Form() {
             name="password"
             placeholder="Masukkan kata sandi Anda"
             type="password"
+            error={state.error?.password}
           />
           <Text
             icon={<ShieldCheck />}
@@ -47,9 +62,14 @@ export default function Form() {
             name="confirm_password"
             placeholder="Konfirmasi kata sandi Anda"
             type="password"
+            error={state.error?.confirm_password}
           />
         </div>
-        <button type="submit" className="mt-10 w-full transform cursor-pointer rounded-lg bg-amber-500 p-4 font-semibold text-white transition-all duration-300 hover:scale-[1.02] hover:bg-amber-400 focus:outline-none">
+        <button
+          type="submit"
+          className="mt-10 w-full transform cursor-pointer rounded-lg bg-amber-500 p-4 font-semibold text-white transition-all duration-300 hover:scale-[1.02] hover:bg-amber-400 focus:outline-none"
+          disabled={pending}
+        >
           {pending ? "Memuat..." : "Daftar"}
         </button>
       </form>

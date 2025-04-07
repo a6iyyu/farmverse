@@ -4,6 +4,7 @@ import { ZodError, ZodSchema } from "zod";
 import { Login as ILogin, Register as IRegister } from "@/types/auth";
 import { AuthUtils as Utils } from "@/utils/auth.utils";
 import { Prisma } from "@/utils/prisma";
+import { JWT } from "./jwt";
 
 // prettier-ignore
 export class AuthService {
@@ -19,27 +20,20 @@ export class AuthService {
 
   public static async Login({ email, password, role }: { email: string; password: string; role: "ADMIN" | "BANK" | "FARMER" }): Promise<ILogin> {
     try {
-      const token = randomBytes(32).toString("hex");
       const user = await Prisma.users.findUnique({ where: { email } });
 
-      if (!user) {
-        throw new Error("Akun Anda tidak ditemukan!");
-      }
+      if (!user) throw new Error("Akun Anda tidak ditemukan!");
+      if (!(await compare(password, user.password))) throw new Error("Kata sandi yang Anda masukkan salah!");
+      if (user.role !== role) throw new Error(`Anda tidak memiliki akses sebagai ${role}!`);
 
-      if (!(await compare(password, user.password))) {
-        throw new Error("Kata sandi yang Anda masukkan salah!");
-      }
-
-      if (user.role !== role) {
-        throw new Error(`Anda tidak memiliki akses sebagai ${role}!`);
-      }
+      const accessToken = JWT.sign({ id_user: user.id_user, role: user.role });
+      const refreshToken = randomBytes(32).toString("hex");
 
       await Prisma.sessions.deleteMany({ where: { id_user: user.id_user } });
-
       await Prisma.sessions.create({
         data: {
           id_user: user.id_user,
-          token,
+          token: refreshToken,
           expires_at: new Date(Date.now() + 1000 * 60 * 60 * 24),
         },
       });
@@ -50,7 +44,8 @@ export class AuthService {
           id_user: user.id_user,
           email: user.email,
           role: user.role,
-          token,
+          refresh_token: refreshToken,
+          access_token: accessToken,
         },
       };
     } catch (error) {
@@ -62,14 +57,8 @@ export class AuthService {
   public static async Register({ username, email, password, confirm_password, role }: { username: string; email: string; password: string; confirm_password: string; role: "ADMIN" | "BANK" | "FARMER" }): Promise<IRegister> {
     try {
       const existingUser = await Prisma.users.findFirst({ where: { OR: [{ email }, { username }] } });
-
-      if (password !== confirm_password) {
-        throw new Error("Konfirmasi kata sandi tidak sesuai!");
-      }
-
-      if (existingUser) {
-        throw new Error("Pengguna sudah ada!");
-      }
+      if (password !== confirm_password) throw new Error("Konfirmasi kata sandi tidak sesuai!");
+      if (existingUser) throw new Error("Pengguna sudah ada!");
 
       const hashing = await hash(password, 10);
       const user = await Prisma.users.create({
@@ -100,13 +89,8 @@ export class AuthService {
   public static async Logout(token: string): Promise<{ message: string }> {
     try {
       const session = await Prisma.sessions.findUnique({ where: { token } });
-
-      if (!session) {
-        throw new Error("Sesi tidak ditemukan atau akun Anda sudah keluar.");
-      }
-
+      if (!session) throw new Error("Sesi tidak ditemukan atau akun Anda sudah keluar.");
       await Prisma.sessions.delete({ where: { token } });
-
       return { message: "Anda berhasil keluar." };
     } catch (error) {
       if (process.env.NODE_ENV !== "production") console.error(`Terjadi kesalahan saat masuk ke akun Anda: ${error}`);

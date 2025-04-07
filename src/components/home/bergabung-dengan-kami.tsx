@@ -27,7 +27,7 @@ export default function BergabungDenganKami() {
             Indonesia Emas 2045!
           </h5>
         </figcaption>
-        <Link href="/auth/login" className="flex w-fit items-center gap-2 rounded-md bg-white px-4 py-2.5 lg:px-6 lg:py-3 text-sm lg:text-base font-semibold text-black">
+        <Link href="/login" className="flex w-fit items-center gap-2 rounded-md bg-white px-4 py-2.5 lg:px-6 lg:py-3 text-sm lg:text-base font-semibold text-black">
           Bergabung dengan kami <ChevronRight size={20} />
         </Link>
       </div>

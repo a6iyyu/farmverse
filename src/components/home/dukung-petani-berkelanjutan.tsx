@@ -27,7 +27,7 @@ export default function DukungPetaniBerkelanjutan() {
             menciptakan masa depan yang lebih hijau.
           </h5>
         </figcaption>
-        <Link href="/auth/register" className="flex w-fit items-center gap-2 rounded-md bg-white px-4 py-2.5 lg:px-6 lg:py-3 text-sm lg:text-base font-semibold text-black">
+        <Link href="/register" className="flex w-fit items-center gap-2 rounded-md bg-white px-4 py-2.5 lg:px-6 lg:py-3 text-sm lg:text-base font-semibold text-black">
           Mulai kontribusi <ChevronRight size={20} />
         </Link>
       </div>

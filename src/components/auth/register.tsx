@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
+import { useRouter } from "next/navigation";
+import { useActionState, useEffect } from "react";
 import { LockKeyhole, Mail, ShieldCheck, SquareUser, User } from "lucide-react";
 import { Register } from "@/app/(auth)/register/actions";
 import Text from "@/shared/form/text";
@@ -9,6 +10,11 @@ import Select from "@/shared/form/select";
 // prettier-ignore
 export default function Form() {
   const [state, action, pending] = useActionState(Register, { error: {} });
+  const router = useRouter();
+
+  useEffect(() => {
+    if (typeof state?.redirect === "string") router.push(state.redirect);
+  }, [router, state]);
 
   return (
     <section className="bg-gradient-to-lr mx-auto flex w-4/5 flex-col items-center justify-center from-[#a9d6ff] to-[#edf2f7] bg-cover bg-center bg-no-repeat py-12 text-black lg:w-[65%]">
@@ -27,6 +33,7 @@ export default function Form() {
             placeholder="Masukkan nama pengguna Anda"
             autoComplete="username"
             error={state.error?.username}
+            value={state.values?.username}
           />
           <Text
             icon={<Mail />}
@@ -36,6 +43,7 @@ export default function Form() {
             type="email"
             autoComplete="email"
             error={state.error?.email}
+            value={state.values?.email}
           />
           <Select
             icon={<SquareUser />}
@@ -47,6 +55,7 @@ export default function Form() {
               { label: "Admin", value: "ADMIN" },
               { label: "Bank", value: "BANK" },
             ]}
+            value={state.values?.role}
           />
           <Text
             icon={<LockKeyhole />}
@@ -55,6 +64,7 @@ export default function Form() {
             placeholder="Masukkan kata sandi Anda"
             type="password"
             error={state.error?.password}
+            value={state.values?.password}
           />
           <Text
             icon={<ShieldCheck />}
@@ -63,8 +73,10 @@ export default function Form() {
             placeholder="Konfirmasi kata sandi Anda"
             type="password"
             error={state.error?.confirm_password}
+            value={state.values?.confirm_password}
           />
         </div>
+        <span className="flex items-center justify-between"></span>
         <button
           type="submit"
           className="mt-10 w-full transform cursor-pointer rounded-lg bg-amber-500 p-4 font-semibold text-white transition-all duration-300 hover:scale-[1.02] hover:bg-amber-400 focus:outline-none"

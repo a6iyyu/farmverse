@@ -1,10 +1,10 @@
 import { compare, hash } from "bcrypt";
-import { randomBytes } from "crypto";
+import { getRandomValues } from "crypto";
 import { ZodError, ZodSchema } from "zod";
 import { Login as ILogin, Register as IRegister } from "@/types/auth";
 import { AuthUtils as Utils } from "@/utils/auth.utils";
+import { JWT } from "@/utils/jwt";
 import { Prisma } from "@/utils/prisma";
-import { JWT } from "./jwt";
 
 // prettier-ignore
 export class AuthService {
@@ -18,16 +18,15 @@ export class AuthService {
     }
   }  
 
-  public static async Login({ email, password, role }: { email: string; password: string; role: "ADMIN" | "BANK" | "FARMER" }): Promise<ILogin> {
+  public static async Login({ email, password }: { email: string; password: string }): Promise<ILogin> {
     try {
       const user = await Prisma.users.findUnique({ where: { email } });
 
       if (!user) throw new Error("Akun Anda tidak ditemukan!");
       if (!(await compare(password, user.password))) throw new Error("Kata sandi yang Anda masukkan salah!");
-      if (user.role !== role) throw new Error(`Anda tidak memiliki akses sebagai ${role}!`);
 
-      const accessToken = JWT.sign({ id_user: user.id_user, role: user.role });
-      const refreshToken = randomBytes(32).toString("hex");
+      const accessToken = await JWT.sign({ id_user: user.id_user });
+      const refreshToken = Array.from(getRandomValues(new Uint8Array(32))).map((b) => b.toString(16).padStart(2, "0")).join("");
 
       await Prisma.sessions.deleteMany({ where: { id_user: user.id_user } });
       await Prisma.sessions.create({

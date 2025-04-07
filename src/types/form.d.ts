@@ -2,6 +2,7 @@ import { InputHTMLAttributes, ReactElement, SelectHTMLAttributes } from "react";
 
 interface Input {
   icon?: ReactElement;
+  error?: string | undefined;
   label: string;
   name: string;
   placeholder: string;
@@ -9,7 +10,7 @@ interface Input {
 }
 
 export interface Text extends InputHTMLAttributes<HTMLInputElement>, Input {
-  error: string | undefined;
+  type?: string;
 }
 
 export interface Select extends SelectHTMLAttributes<HTMLSelectElement>, Input {

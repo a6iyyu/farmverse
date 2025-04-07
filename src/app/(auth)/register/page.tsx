@@ -4,14 +4,14 @@ import Form from "@/components/auth/register";
 
 export const metadata: Metadata = {
   title: "Daftar",
-  description: "",
+  description: "Bergabunglah dengan Farmverse dan jadilah bagian dari revolusi agrikultur. Daftarkan dirimu untuk memulai perjalananmu dalam agrikultur yang berkelanjutan.",
   openGraph: {
     title: "Daftar",
-    description: "",
+    description: "Bergabunglah dengan Farmverse dan jadilah bagian dari revolusi agrikultur. Daftarkan dirimu untuk memulai perjalananmu dalam agrikultur yang berkelanjutan.",
   },
   twitter: {
     title: "Daftar",
-    description: "",
+    description: "Bergabunglah dengan Farmverse dan jadilah bagian dari revolusi agrikultur. Daftarkan dirimu untuk memulai perjalananmu dalam agrikultur yang berkelanjutan.",
   },
 };
 

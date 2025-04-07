@@ -2,7 +2,7 @@ import { ChevronDown } from "lucide-react";
 import { Select as ISelect } from "@/types/form";
 
 // prettier-ignore
-export default function Select({ icon, label, name, placeholder, options, value, ...attributes }: ISelect) {
+export default function Select({ error, icon, label, name, placeholder, options, value, ...attributes }: ISelect) {
   return (
     <fieldset className="flex w-full flex-col justify-between space-y-4">
       <label htmlFor={name} className="font-medium">
@@ -18,7 +18,7 @@ export default function Select({ icon, label, name, placeholder, options, value,
           name={name}
           id={name}
           className="w-full appearance-none rounded-lg border-2 border-gray-300 py-2.5 pr-4 pl-14 transition-all duration-200 focus:border-[#1a4167] focus:ring-[#1a4167]/20 focus:outline-none"
-          value={value}
+          defaultValue={value}
           required
           {...attributes}
         >
@@ -35,6 +35,7 @@ export default function Select({ icon, label, name, placeholder, options, value,
           <ChevronDown className="h-4 w-4" />
         </span>
       </div>
+      {error && <h5 className="mt-2 cursor-default text-sm text-red-500">{error}</h5>}
     </fieldset>
   );
 }

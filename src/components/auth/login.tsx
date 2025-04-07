@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
+import { useRouter } from "next/navigation";
+import { useActionState, useEffect } from "react";
 import { LockKeyhole, Mail } from "lucide-react";
 import { Login } from "@/app/(auth)/login/actions";
 import Text from "@/shared/form/text";
@@ -8,6 +9,11 @@ import Text from "@/shared/form/text";
 // prettier-ignore
 export default function Form() {
   const [state, action, pending] = useActionState(Login, { error: {} });
+  const router = useRouter();
+
+    useEffect(() => {
+      if (state?.redirect) router.push(state.redirect);
+    }, [router, state]);
 
   return (
     <section className="bg-gradient-to-lr mx-auto flex w-4/5 flex-col items-center justify-center from-[#a9d6ff] to-[#edf2f7] bg-cover bg-center bg-no-repeat text-black lg:w-[65%]">

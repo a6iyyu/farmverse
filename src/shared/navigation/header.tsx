@@ -15,7 +15,7 @@ export default function Header() {
   });
 
   return (
-    <header className={`fixed top-0 z-50 w-full px-8 py-4 font-semibold transition-colors duration-300 ${headerSticky ? "bg-slate-50 text-black shadow-2xl" : "bg-none text-amber-500"}`}>
+    <header className={`fixed top-0 z-40 w-full px-8 py-4 font-semibold transition-colors duration-300 ${headerSticky ? "bg-slate-50 text-black shadow-2xl" : "bg-none text-amber-500"}`}>
       <div className="container mx-auto flex items-center justify-between">
         <Link href="/">
           <Image

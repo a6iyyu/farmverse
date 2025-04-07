@@ -3,6 +3,7 @@ import { z } from "zod";
 export class Schema {
   static Login = z.object({
     email: z.string().trim().toLowerCase().email({ message: "Format surel tidak valid." }),
+    role: z.enum(["ADMIN", "BANK", "FARMER"]),
     password: z.string().trim().min(1, { message: "Kata sandi tidak boleh kosong." }),
   });
   

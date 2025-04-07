@@ -4,14 +4,14 @@ import Form from "@/components/auth/login";
 
 export const metadata: Metadata = {
   title: "Masuk",
-  description: "",
+  description: "Ayo masuk dan teruskan perjalananmu di Farmverse. Dukung pertumbuhan agrikulturmu dengan teknologi dan dukungan berkelanjutan.",
   openGraph: {
     title: "Masuk",
-    description: "",
+    description: "Ayo masuk dan teruskan perjalananmu di Farmverse. Dukung pertumbuhan agrikulturmu dengan teknologi dan dukungan berkelanjutan.",
   },
   twitter: {
     title: "Masuk",
-    description: "",
+    description: "Ayo masuk dan teruskan perjalananmu di Farmverse. Dukung pertumbuhan agrikulturmu dengan teknologi dan dukungan berkelanjutan.",
   },
 };
 

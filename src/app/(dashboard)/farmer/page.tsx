@@ -1,3 +1,3 @@
-export default function Farmer() {
+export default function Dashboard() {
   return null;
 }

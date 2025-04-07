@@ -1,3 +1,3 @@
-export default function Bank() {
+export default function Dashboard() {
   return null;
 }

@@ -10,7 +10,7 @@ export async function middleware(request: NextRequest) {
   if (publicPaths.includes(url)) return NextResponse.next();
   if (!token || typeof token !== "string" || token.length !== 64) return NextResponse.redirect(new URL("/login", request.url));
 
-  const payload = JWT.verify<{ id_user: string; role: string }>(token);
+  const payload = await JWT.verify<{ id_user: string; role: string }>(token);
   if (!payload) return NextResponse.redirect(new URL("/login", request.url));
 
   const session = await Prisma.sessions.findUnique({ where: { token }, include: { user: true } });
@@ -28,4 +28,5 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: ["/farmer/:path*", "/admin/:path*", "/bank/:path*"],
+  runtime: "nodejs",
 };

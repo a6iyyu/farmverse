@@ -52,7 +52,6 @@ export default function Form() {
             placeholder="Masukkan peran Anda"
             options={[
               { label: "Farmer", value: "FARMER" },
-              { label: "Admin", value: "ADMIN" },
               { label: "Bank", value: "BANK" },
             ]}
             value={state.values?.role}

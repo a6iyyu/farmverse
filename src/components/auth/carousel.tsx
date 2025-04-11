@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 
 // prettier-ignore
-export default function Carousel() {
+export function Carousel() {
   const [current, setCurrent] = useState(0);
   const images = ["/auth/karosel-1.jpeg", "/auth/karosel-2.jpeg", "/auth/karosel-3.jpg"];
 

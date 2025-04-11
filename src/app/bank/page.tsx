@@ -14,5 +14,7 @@ export const metadata: Metadata = {
 };
 
 export default function Dashboard() {
-  return null;
+  return (
+    <h1>ini halaman bank</h1>
+  );
 }

@@ -1,6 +1,6 @@
 import { Metadata } from "next";
-import Carousel from "@/components/auth/carousel";
-import Form from "@/components/auth/register";
+import { Carousel } from "@/components/auth/carousel";
+import { Register as Form } from "@/components/auth/register";
 
 export const metadata: Metadata = {
   title: "Daftar",

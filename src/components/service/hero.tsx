@@ -1,5 +1,6 @@
 import { TbHandClick } from "react-icons/tb";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -32,9 +33,9 @@ export default function Hero() {
           panen dan menciptakan ekosistem yang berkelanjutan. Bersama kami,
           wujudkan masa depan agrikultur yang lebih baik.
         </h5>
-        <button className="mt-8 inline-flex w-fit cursor-pointer items-center rounded-lg bg-amber-600 px-5 py-3 text-white transition-colors duration-300 lg:hover:bg-amber-500">
+        <Link href="/register" className="mt-8 inline-flex w-fit cursor-pointer items-center rounded-lg bg-amber-600 px-5 py-3 text-white transition-colors duration-300 lg:hover:bg-amber-500">
           <TbHandClick size={20} className="mr-3" /> Mulai Sekarang
-        </button>
+        </Link>
       </div>
     </section>
   );

@@ -49,7 +49,7 @@ export class AuthService {
       };
     } catch (error) {
       if (process.env.NODE_ENV !== "production") console.error(`Terjadi kesalahan saat masuk ke akun Anda: ${error}`);
-      throw new Error("Terjadi kesalahan pada server, coba lagi nanti.");
+      throw new Error(`Terjadi kesalahan saat masuk ke akun Anda.`);
     }
   }
 
@@ -82,7 +82,7 @@ export class AuthService {
       };
     } catch (error) {
       if (process.env.NODE_ENV !== "production") console.error(`Terjadi kesalahan saat mendaftarkan akun Anda: ${error}`);
-      throw new Error("Terjadi kesalahan pada server, coba lagi nanti.");
+      throw new Error("Terjadi kesalahan saat mendaftarkan akun Anda.");
     }
   }
 
@@ -94,7 +94,7 @@ export class AuthService {
       return { message: "Anda berhasil keluar." };
     } catch (error) {
       if (process.env.NODE_ENV !== "production") console.error(`Terjadi kesalahan saat keluar dari akun Anda: ${error}`);
-      throw new Error("Terjadi kesalahan pada server, coba lagi nanti.");
+      throw new Error("Terjadi kesalahan saat keluar dari akun Anda.");
     }
   }
 }

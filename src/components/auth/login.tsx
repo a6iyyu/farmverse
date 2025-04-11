@@ -3,12 +3,12 @@
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect } from "react";
 import { LockKeyhole, Mail } from "lucide-react";
-import { Login } from "@/app/(auth)/login/actions";
+import { Login as Actions } from "@/app/(auth)/login/actions";
 import Text from "@/shared/form/text";
 
 // prettier-ignore
-export default function Form() {
-  const [state, action, pending] = useActionState(Login, { error: {} });
+export function Login() {
+  const [state, action, pending] = useActionState(Actions, { error: {} });
   const router = useRouter();
 
     useEffect(() => {

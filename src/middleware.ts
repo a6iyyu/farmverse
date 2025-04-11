@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { JWT } from "@/utils/jwt";
+import axios from "axios";
 
 export async function middleware(request: NextRequest) {
   const refreshToken = request.cookies.get("refresh_token")?.value;
@@ -11,36 +12,28 @@ export async function middleware(request: NextRequest) {
     if (!token || !refreshToken) return NextResponse.next();
     
     try {
-      const validationResponse = await fetch(`${request.nextUrl.origin}/api/auth`, {
-        method: "POST",
+      const { data } = await axios.post(`${request.nextUrl.origin}/api/login`, { token, refreshToken }, {
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, refreshToken }),
       });
 
-      if (validationResponse.ok) {
-        const { role } = await validationResponse.json();
-        return NextResponse.redirect(new URL(roleRoutes[role], request.url));
-      }
+      const { role } = data;
+      return NextResponse.redirect(new URL(roleRoutes[role], request.url));
     } catch (error) {
       console.error(process.env.NODE_ENV !== "production" && `[Middleware Error]: ${error}`);
+      return NextResponse.next();
     }
-    return NextResponse.next();
   }
 
   if (!token || !refreshToken) return NextResponse.redirect(new URL("/login", request.url));
 
   try {
-    const validationResponse = await fetch(`${request.nextUrl.origin}/api/auth`, {
-      method: "POST",
+    const { data } = await axios.post(`${request.nextUrl.origin}/api/login`, { token, refreshToken }, {
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token, refreshToken }),
     });
 
-    if (!validationResponse.ok) throw new Error('Invalid session');
-
-    const { role } = await validationResponse.json();
+    const { role } = data;
     const payload = await JWT.verify<{ id_user: string; role: string }>(token);
-    if (payload?.role !== role) throw new Error('Role mismatch');
+    if (payload?.role !== role) throw new Error("Peran Anda tidak valid.");
 
     const protectedRoute = Object.values(roleRoutes).some((path) => url.startsWith(path));
     if (protectedRoute && !url.startsWith(roleRoutes[role])) return NextResponse.redirect(new URL(roleRoutes[role], request.url));

@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import HamburgerMenu from "./hamburger-menu";
+import HamburgerMenu from "@/shared/navigation/hamburger-menu";
 
 // prettier-ignore
 export default function Header() {
   const [headerSticky, setHeaderSticky] = useState<boolean>(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     window.addEventListener("scroll", () => setHeaderSticky(window.scrollY > 5));
@@ -28,18 +30,16 @@ export default function Header() {
           />
         </Link>
         <nav className="hidden items-center justify-center space-x-6 lg:flex">
-          <Link href="/blog" className="group">
-            Blog
-            <span className="block h-0.5 max-w-0 bg-amber-600 transition-all duration-500 group-hover:max-w-full" />
-          </Link>
-          <Link href="/service" className="group">
-            Service
-            <span className="block h-0.5 max-w-0 bg-amber-600 transition-all duration-500 group-hover:max-w-full" />
-          </Link>
-          <Link href="/support" className="group">
-            Support
-            <span className="block h-0.5 max-w-0 bg-amber-600 transition-all duration-500 group-hover:max-w-full" />
-          </Link>
+          {["Blog", "Service", "Support"].map((item: string, index: number) => (
+            <Link
+              key={index}
+              href={`/${item.toLowerCase() as string}`}
+              className={`group ${pathname === `/${item.toLowerCase() as string}` ? "rounded-full bg-amber-600 px-4 py-1 text-white" : ""}`}
+            >
+              {item}
+              <span className="block h-0.5 max-w-0 bg-amber-600 transition-all duration-500 group-hover:max-w-full" />
+            </Link>
+          ))}
         </nav>
         <section className="hidden items-center justify-end space-x-6 lg:flex">
           <Link href="/register" className="group">

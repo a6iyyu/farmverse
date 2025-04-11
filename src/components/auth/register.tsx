@@ -3,13 +3,14 @@
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect } from "react";
 import { LockKeyhole, Mail, ShieldCheck, SquareUser, User } from "lucide-react";
-import { Register } from "@/app/(auth)/register/actions";
+import { Register as Actions } from "@/app/(auth)/register/actions";
+import Form from "next/form";
 import Text from "@/shared/form/text";
 import Select from "@/shared/form/select";
 
 // prettier-ignore
-export default function Form() {
-  const [state, action, pending] = useActionState(Register, { error: {} });
+export function Register() {
+  const [state, action, pending] = useActionState(Actions, { error: {} });
   const router = useRouter();
 
   useEffect(() => {
@@ -24,7 +25,7 @@ export default function Form() {
       <h5 className="mt-1 cursor-default text-center text-sm text-gray-600 lg:mb-6 lg:text-base">
         Bersama kita wujudkan agrikultur yang lebih adil dan berkelanjutan.
       </h5>
-      <form action={action} className="w-full">
+      <Form action={action} className="w-full">
         <div className="mt-6 space-y-5">
           <Text
             icon={<User />}
@@ -83,7 +84,7 @@ export default function Form() {
         >
           {pending ? "Memuat..." : "Daftar"}
         </button>
-      </form>
+      </Form>
       <h5 className="mt-8 cursor-default text-center text-sm text-gray-500">
         &copy; {new Date().getFullYear()} Farmverse
       </h5>

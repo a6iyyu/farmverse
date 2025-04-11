@@ -1,6 +1,6 @@
 import { Metadata } from "next";
-import Carousel from "@/components/auth/carousel";
-import Form from "@/components/auth/login";
+import { Carousel } from "@/components/auth/carousel";
+import { Login as Form } from "@/components/auth/login";
 
 export const metadata: Metadata = {
   title: "Masuk",

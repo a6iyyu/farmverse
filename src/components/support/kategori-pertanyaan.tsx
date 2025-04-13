@@ -13,12 +13,12 @@ export default function KategoriPertanyaan({ setShowCategory }: { setShowCategor
         Lainnya
       </h3>
       <hr className="my-4 h-0.5 w-full bg-slate-50 md:h-1" />
-      <span className="flex w-full max-w-full flex-row justify-start gap-4 overflow-x-auto scroll-smooth whitespace-nowrap md:flex-col md:flex-wrap md:overflow-x-hidden">
+      <span className="flex w-full max-w-full flex-row justify-start gap-4 overflow-x-auto scroll-smooth pb-6 whitespace-nowrap md:flex-col md:flex-wrap md:overflow-x-hidden">
         {Array.from(new Set(FAQs.map((faq) => faq.category))).filter((category) => category !== "Umum").map((list: Categories, index) => (
           <button
             key={index}
             onClick={() => { setShowCategory(list); setCategoryIndex(index) }}
-            className={`min-w-max cursor-pointer rounded-lg px-6 py-3 text-center font-semibold shadow-lg transition-colors duration-400 md:w-full md:max-w-full md:text-left md:active:scale-95 ${categoryIndex === index ? "bg-amber-600 text-white" : "bg-slate-50 text-slate-900 lg:hover:bg-slate-100"}`}
+            className={`min-w-max cursor-pointer rounded-lg px-6 py-3 text-center font-semibold shadow-md transition-colors duration-400 md:w-full md:max-w-full md:text-left md:active:scale-95 ${categoryIndex === index ? "bg-amber-600 text-white" : "bg-slate-50 text-slate-900 lg:hover:bg-slate-100"}`}
           >
             {list}
           </button>

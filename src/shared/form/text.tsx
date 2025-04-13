@@ -11,9 +11,9 @@ export default function Text({ error, icon, label, name, placeholder, type = "te
       <label htmlFor={name} className="font-medium">
         {label}
       </label>
-      <div className="relative mt-4">
+      <div className="relative mt-4 text-gray-500">
         {icon && (
-          <span className="absolute inset-y-0 left-0 flex items-center pl-5 text-gray-500">
+          <span className="absolute inset-y-0 left-0 flex items-center pl-5">
             {icon}
           </span>
         )}
@@ -30,7 +30,7 @@ export default function Text({ error, icon, label, name, placeholder, type = "te
           <button
             type="button"
             onClick={() => setShowPassword((prev) => !prev)}
-            className="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-500"
+            className="absolute inset-y-0 right-0 flex items-center pr-4"
             tabIndex={-1}
           >
             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}

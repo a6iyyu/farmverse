@@ -16,4 +16,11 @@ export class Schema {
     message: "Tidak sama dengan kata sandi.",
     path: ["confirm_password"],
   });
+
+  static Feedback = z.object({
+    full_name: z.string().trim().min(1, { message: "Minimal 1 karakter." }).max(100, { message: "Nama tidak boleh lebih dari 100 karakter." }).regex(/[a-zA-Z\s]+$/, { message: "Format nama tidak sesuai format." }),
+    email: z.string().trim().toLowerCase().email({ message: "Format surel tidak valid." }).max(100, { message: "Harus kurang dari 100 karakter." }),
+    phone: z.string().trim().regex(/^[0-9]+$/, { message: "Format telepon hanya boleh angka." }).max(20, { message: "Nomor telepon maksimal 20 karakter." }),
+    message: z.string().trim().min(1, { message: "Minimal 1 karakter." }),
+  });
 }

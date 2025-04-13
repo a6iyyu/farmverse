@@ -1,12 +1,12 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { AuthService } from "@/utils/auth.service";
-import { AuthUtils } from "@/utils/auth.utils";
+import { AuthService as Service } from "@/controllers/auth";
+import { AuthUtils as Utils } from "@/utils/auth";
 import { Schema } from "@/utils/schema";
 
-export async function Login(prev: { error?: Record<string, string>, redirect?: string; values?: Record<string, string> }, form: FormData): Promise<{ error?: Record<string, string>, redirect?: string, values?: Record<string, string> }> {
-  const { data, error } = AuthService.Validation(Schema.Login, AuthUtils.ParseForm<typeof Schema.Login._output>(form));  
+export async function Login(_prev: { error?: Record<string, string>, redirect?: string; values?: Record<string, string> }, form: FormData): Promise<{ error?: Record<string, string>, redirect?: string, values?: Record<string, string> }> {
+  const { data, error } = Utils.Validation(Schema.Login, Utils.ParseForm<typeof Schema.Login._output>(form));  
   const values = {
     email: form.get("email")?.toString() ?? "",
     password: form.get("password")?.toString() ?? "",
@@ -15,7 +15,7 @@ export async function Login(prev: { error?: Record<string, string>, redirect?: s
   if (error) return { error, values };
 
   try {
-    const result = await AuthService.Login({
+    const result = await Service.Login({
       email: data?.email as string,
       password: data?.password as string,
     });

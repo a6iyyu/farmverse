@@ -1,23 +1,11 @@
 import { compare, hash } from "bcrypt";
 import { getRandomValues } from "crypto";
-import { ZodError, ZodSchema } from "zod";
 import { Login as ILogin, Register as IRegister } from "@/types/auth";
-import { AuthUtils as Utils } from "@/utils/auth.utils";
 import { JWT } from "@/utils/jwt";
 import { Prisma } from "@/utils/prisma";
 
 // prettier-ignore
 export class AuthService {
-  public static Validation<T>(schema: ZodSchema<T>, data: unknown): { data?: T; error?: Record<string, string> } {
-    try {
-      const parsed = schema.parse(data);
-      return { data: parsed };
-    } catch (error) {
-      if (error instanceof ZodError) return { error: Utils.FormatZodError(error) };
-      throw error;
-    }
-  }  
-
   public static async Login({ email, password }: { email: string; password: string }): Promise<ILogin> {
     try {
       const user = await Prisma.users.findUnique({ where: { email } });

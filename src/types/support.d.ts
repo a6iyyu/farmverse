@@ -8,6 +8,13 @@ export interface FAQs {
   answer: string;
 }
 
+export interface Feedback {
+  full_name: string;
+  email: string;
+  phone: string;
+  message: string;
+}
+
 export interface Statistics {
   icon: ReactElement;
   count: number;

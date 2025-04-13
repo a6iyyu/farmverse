@@ -1,12 +1,12 @@
 "use server";
 
-import { AuthService as Auth } from "@/utils/auth.service";
-import { AuthUtils as Utils } from "@/utils/auth.utils";
+import { AuthService as Auth } from "@/controllers/auth";
+import { AuthUtils as Utils } from "@/utils/auth";
 import { Schema } from "@/utils/schema";
 import { Role } from "@/types/auth";
 
-export async function Register(prev: { error?: Record<string, string>, redirect?: string; values?: Record<string, string> }, form: FormData): Promise<{ error?: Record<string, string>, redirect?: string, values?: Record<string, string> }> {
-  const { data, error } = Auth.Validation(Schema.Register, Utils.ParseForm<typeof Schema.Register._output>(form));
+export async function Register(_prev: { error?: Record<string, string>, redirect?: string; values?: Record<string, string> }, form: FormData): Promise<{ error?: Record<string, string>, redirect?: string, values?: Record<string, string> }> {
+  const { data, error } = Utils.Validation(Schema.Register, Utils.ParseForm<typeof Schema.Register._output>(form));
   const values = {
     username: form.get("username")?.toString() ?? "",
     email: form.get("email")?.toString() ?? "",

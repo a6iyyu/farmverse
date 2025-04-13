@@ -43,12 +43,12 @@ export default function FAQs({ showCategory }: { showCategory: string }) {
           <button
             type="button"
             onClick={() => toggleAnswer(index)}
-            className="flex w-full items-center justify-between text-left font-medium text-slate-800"
+            className="flex w-full items-center justify-between gap-3 text-left font-medium text-slate-800"
           >
-            <h5 className={`transition-colors ${activeIndex === index ? "font-semibold text-emerald-600" : "font-medium text-slate-800"}`}>
+            <h5 className={`flex-1 transition-colors ${activeIndex === index ? "font-semibold text-emerald-600" : "font-medium text-slate-800"}`}>
               {faq.question}
             </h5>
-            <ChevronDown size={20} className={`transition-transform duration-300 ${activeIndex === index && "rotate-180"}`} />
+            <ChevronDown className={`transition-transform duration-300 ${activeIndex === index && "rotate-180"}`} />
           </button>
           <figcaption
             ref={(element) => { answer.current[index] = element }}

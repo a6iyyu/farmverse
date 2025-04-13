@@ -5,7 +5,6 @@ import { ChevronDown } from "lucide-react";
 import { FAQs } from "@/data/support";
 import { FAQs as IFAQs } from "@/types/support";
 
-// prettier-ignore
 export default function TigaPertanyaanPembuka() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const question = useRef<(HTMLLIElement | null)[]>([]);
@@ -46,9 +45,9 @@ export default function TigaPertanyaanPembuka() {
             <button
               type="button"
               onClick={() => toggleAnswer(index)}
-              className="flex w-full items-center justify-between text-left font-medium text-slate-800"
+              className="flex w-full items-center justify-between gap-3 text-left font-medium text-slate-800"
             >
-              <h5 className={`transition-colors ${activeIndex === index ? "font-semibold text-emerald-600" : "font-medium text-slate-800"}`}>
+              <h5 className={`flex-1 transition-colors ${activeIndex === index ? "font-semibold text-emerald-600" : "font-medium text-slate-800"}`}>
                 {list.question}
               </h5>
               <ChevronDown size={20} className={`transition-transform duration-300 ${activeIndex === index && "rotate-180"}`} />

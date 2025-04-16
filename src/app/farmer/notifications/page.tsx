@@ -1,18 +1,18 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Dasbor",
+  title: "",
   description: "",
   openGraph: {
-    title: "Dasbor",
+    title: "",
     description: "",
   },
   twitter: {
-    title: "Dasbor",
+    title: "",
     description: "",
   },
 };
 
-export default async function Dashboard() {
+export default function Notifications() {
   return null;
 }

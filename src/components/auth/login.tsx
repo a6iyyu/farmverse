@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect } from "react";
 import { LockKeyhole, Mail } from "lucide-react";
-import { Login as Actions } from "@/app/(auth)/login/actions";
+import { Login as Actions } from "@/actions/login";
 import Text from "@/shared/form/text";
 
 // prettier-ignore

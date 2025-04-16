@@ -1,6 +1,6 @@
 import { ZodError, ZodSchema } from "zod";
 
-export class AuthUtils {
+export class Auth {
   public static ParseForm<T extends Record<string, string>>(form: FormData): T {
     return Object.fromEntries(form.entries()) as unknown as T;
   }

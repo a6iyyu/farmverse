@@ -1,8 +1,8 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { AuthService as Service } from "@/controllers/auth";
-import { AuthUtils as Utils } from "@/utils/auth";
+import { Auth } from "@/controllers/auth";
+import { Auth as Utils } from "@/utils/auth";
 import { Schema } from "@/utils/schema";
 
 export async function Login(_prev: { error?: Record<string, string>, redirect?: string; values?: Record<string, string> }, form: FormData): Promise<{ error?: Record<string, string>, redirect?: string, values?: Record<string, string> }> {
@@ -15,7 +15,7 @@ export async function Login(_prev: { error?: Record<string, string>, redirect?: 
   if (error) return { error, values };
 
   try {
-    const result = await Service.Login({
+    const result = await Auth.Login({
       email: data?.email as string,
       password: data?.password as string,
     });
@@ -39,7 +39,7 @@ export async function Login(_prev: { error?: Record<string, string>, redirect?: 
       secure: process.env.NODE_ENV === "production",
     });
 
-    if (!["FARMER", "BANK", "ADMIN"].includes(role)) throw new Error("Peran Anda tidak valid.");
+    if (!["ADMIN", "BANK", "CUSTOMER", "FARMER"].includes(role)) throw new Error("Peran Anda tidak valid.");
     return { redirect: `/${role.toLowerCase()}` };
   } catch (error) {
     if (error instanceof Error) return { error: { form: error.message } };

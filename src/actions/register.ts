@@ -1,7 +1,7 @@
 "use server";
 
-import { AuthService as Auth } from "@/controllers/auth";
-import { AuthUtils as Utils } from "@/utils/auth";
+import { Auth } from "@/controllers/auth";
+import { Auth as Utils } from "@/utils/auth";
 import { Schema } from "@/utils/schema";
 import { Role } from "@/types/auth";
 

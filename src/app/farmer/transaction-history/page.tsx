@@ -13,6 +13,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function AddSellCrops() {
+export default function TransactionHistory() {
   return null;
 }

@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Hero from "@/components/partners/hero";
 
 export const metadata: Metadata = {
   title: "Mitra Kami",
@@ -14,5 +15,9 @@ export const metadata: Metadata = {
 };
 
 export default function Partners() {
-  return null;
+  return (
+    <>
+      <Hero />
+    </>
+  );
 }

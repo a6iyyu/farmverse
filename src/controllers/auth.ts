@@ -5,7 +5,7 @@ import { JWT } from "@/utils/jwt";
 import { Prisma } from "@/utils/prisma";
 
 // prettier-ignore
-export class AuthService {
+export class Auth {
   public static async Login({ email, password }: { email: string; password: string }): Promise<ILogin> {
     try {
       const user = await Prisma.users.findUnique({ where: { email } });
@@ -44,7 +44,7 @@ export class AuthService {
   public static async Register({ username, email, password, confirm_password, role }: { username: string; email: string; password: string; confirm_password: string; role: string }): Promise<IRegister> {
     try {
       const existingUser = await Prisma.users.findFirst({ where: { OR: [{ email }, { username }] } });
-      if (!["ADMIN", "BANK", "FARMER"].includes(role)) throw new Error("Peran Anda tidak valid.");
+      if (!["ADMIN", "BANK", "CUSTOMER", "FARMER"].includes(role)) throw new Error("Peran Anda tidak valid.");
       if (password !== confirm_password) throw new Error("Konfirmasi kata sandi tidak sesuai!");
       if (existingUser) throw new Error("Pengguna sudah ada!");
       
@@ -55,7 +55,7 @@ export class AuthService {
           name: username,
           email,
           password: hashing,
-          role: role as "ADMIN" | "BANK" | "FARMER",
+          role: role as "ADMIN" | "BANK" | "CUSTOMER" | "FARMER",
         },
       });
 
@@ -74,12 +74,12 @@ export class AuthService {
     }
   }
 
-  public static async Logout(token: string): Promise<{ message: string }> {
+  public static async Logout(token: string): Promise<{ message: string, redirect: string }> {
     try {
       const session = await Prisma.sessions.findUnique({ where: { token } });
       if (!session) throw new Error("Sesi tidak ditemukan atau akun Anda sudah keluar.");
       await Prisma.sessions.delete({ where: { token } });
-      return { message: "Anda berhasil keluar." };
+      return { message: "Anda berhasil keluar.", redirect: "/login" };
     } catch (error) {
       if (process.env.NODE_ENV !== "production") console.error(`Terjadi kesalahan saat keluar dari akun Anda: ${error}`);
       throw new Error("Terjadi kesalahan saat keluar dari akun Anda.");

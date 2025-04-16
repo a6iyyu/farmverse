@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect } from "react";
 import { LockKeyhole, Mail, ShieldCheck, SquareUser, User } from "lucide-react";
-import { Register as Actions } from "@/app/(auth)/register/actions";
+import { Register as Actions } from "@/actions/register";
 import Form from "next/form";
 import Text from "@/shared/form/text";
 import Select from "@/shared/form/select";

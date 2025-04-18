@@ -18,7 +18,7 @@ export class Auth {
           name: username,
           email,
           password: hashing,
-          role: role as "ADMIN" | "BANK" | "CUSTOMER" | "FARMER",
+          role: role as "ADMIN" | "BANK" | "CUSTOMER" | "FARMER" | "UNKNOWN",
         },
       });
 

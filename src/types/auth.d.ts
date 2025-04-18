@@ -1,4 +1,4 @@
-type Role = "ADMIN" | "BANK" | "CUSTOMER" | "FARMER";
+type Role = "ADMIN" | "BANK" | "CUSTOMER" | "FARMER" | "UNKNOWN";
 
 interface Auth {
   id_user: string;

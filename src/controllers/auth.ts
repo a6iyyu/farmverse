@@ -36,16 +36,4 @@ export class Auth {
       throw new Error("Terjadi kesalahan saat mendaftarkan akun Anda.");
     }
   }
-
-  public static async Logout(token: string): Promise<{ message: string, redirect: string }> {
-    try {
-      const session = await Prisma.sessions.findUnique({ where: { token } });
-      if (!session) throw new Error("Sesi tidak ditemukan atau akun Anda sudah keluar.");
-      await Prisma.sessions.delete({ where: { token } });
-      return { message: "Anda berhasil keluar.", redirect: "/login" };
-    } catch (error) {
-      console.error(process.env.NODE_ENV !== "production" && `Terjadi kesalahan saat keluar dari akun Anda: ${error}`);
-      throw new Error("Terjadi kesalahan saat keluar dari akun Anda.");
-    }
-  }
 }

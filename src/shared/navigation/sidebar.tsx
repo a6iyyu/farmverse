@@ -9,7 +9,7 @@ export default function Sidebar() {
   const router = useRouter();
 
   useEffect(() => {
-    if (router) router.push(state.redirect);
+    if (state.redirect) router.push(state.redirect);
   }, [router, state]);
 
   return (

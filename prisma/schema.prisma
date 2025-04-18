@@ -48,8 +48,8 @@ model sessions {
 }
 
 enum Role {
-  FARMER
   ADMIN
   BANK
   CUSTOMER
+  FARMER
 }

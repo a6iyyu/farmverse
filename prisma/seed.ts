@@ -44,5 +44,11 @@ async function seed() {
   });
 }
 
-// prettier-ignore
-seed().catch(e => (console.error(`\nError seeding the database: ${e}\n`), process.exit(1))).finally(async () => await prisma.$disconnect());
+seed()
+  .catch((e) => {
+    console.error(process.env.NODE_ENV !== "production" && `Error while seeding database: ${e}`);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

@@ -7,6 +7,21 @@ export class JWT {
     return await new SignJWT(payload).setProtectedHeader({ alg: "HS256" }).setExpirationTime("15m").sign(JWT_SECRET);
   }
 
+  static async validate(origin: string, token: string, refreshToken: string) {
+    const res = await fetch(`${origin}/api/verify-token`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token, refreshToken }),
+    });
+
+    if (!res.ok) throw new Error("Gagal untuk memvalidasi token!");
+
+    const { role } = await res.json();
+    const payload = await JWT.verify<{ id_user: string; role: string }>(token);
+    if (payload?.role !== role) throw new Error("Peran Anda tidak valid.");
+    return role;
+  }
+
   static async verify<T>(token: string): Promise<T | null> {
     try {
       const { payload } = await jwtVerify(token, JWT_SECRET);

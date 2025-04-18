@@ -1,21 +1,42 @@
 import { NextResponse } from "next/server";
+import { compare } from "bcrypt";
+import { getRandomValues } from "crypto";
 import { JWT } from "@/utils/jwt";
 import { Prisma } from "@/utils/prisma";
 
-export async function POST(request: Request) {
+export async function POST(request: Request): Promise<NextResponse> {
   try {
-    const { token, refreshToken } = await request.json();
-    const payload = await JWT.verify<{ id_user: string; role: string }>(token);
-    if (!payload) return NextResponse.json({ valid: false }, { status: 401 });
+    const { email, password } = await request.json();
+    if (!email || !password) return NextResponse.json({ message: !email ? "Email diperlukan!" : "Kata sandi diperlukan!" }, { status: 400 });
+    
+    const user = await Prisma.users.findUnique({  where: { email } });
+    if (!user) return NextResponse.json({ message: "Akun Anda tidak ditemukan!" }, { status: 401 });
+    if (!(await compare(password, user.password))) return NextResponse.json({ message: "Kata sandi yang Anda masukkan salah!" }, { status: 401 });
+    
+    const accessToken = await JWT.sign({ id_user: user.id_user, role: user.role });
+    const refreshToken = Array.from(getRandomValues(new Uint8Array(32))).map((b) => b.toString(16).padStart(2, "0")).join("");
 
-    const session = await Prisma.sessions.findUnique({ where: { token: refreshToken }, include: { user: true } });
-    if (!session || !session.expires_at || new Date() > session.expires_at) return NextResponse.json({ valid: false }, { status: 401 });
+    await Prisma.sessions.deleteMany({ where: { id_user: user.id_user } });
+    await Prisma.sessions.create({
+      data: {
+        id_user: user.id_user,
+        token: refreshToken,
+        expires_at: new Date(Date.now() + 1000 * 60 * 60 * 24),
+      },
+    });
 
-    const user = await Prisma.users.findUnique({ where: { id_user: session.id_user } });
-    if (!user || user.id_user !== payload.id_user) return NextResponse.json({ valid: false }, { status: 401 });
-
-    return NextResponse.json({ valid: true, role: user.role });
-  } catch {
-    return NextResponse.json({ valid: false }, { status: 401 });
+    return NextResponse.json({
+      message: "Berhasil masuk ke akun Anda.",
+      data: {
+        id_user: user.id_user,
+        email: user.email,
+        role: user.role,
+        refresh_token: refreshToken,
+        access_token: accessToken,
+      }
+    });
+  } catch (error) {
+    console.error(process.env.NODE_ENV !== "production" && `Terjadi kesalahan saat masuk ke akun Anda: ${error}`);
+    return NextResponse.json({ message: "Terjadi kesalahan saat masuk ke akun Anda." }, { status: 500 });
   }
 }

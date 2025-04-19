@@ -6,13 +6,14 @@ import { Schema } from "@/utils/schema";
 import { Login as ILogin } from "@/types/auth";
 
 export async function Login(_prev: { error?: Record<string, string>, redirect?: string; values?: Record<string, string> }, form: FormData): Promise<{ error?: Record<string, string>, redirect?: string, values?: Record<string, string> }> {
-  const { error } = Auth.Validation(Schema.Login, Auth.ParseForm<typeof Schema.Login._output>(form));
   const baseUrl = `${process.env.NODE_ENV === "production" ? "https" : "http"}://${(await headers()).get("host")}`;
   const values = { email: form.get("email")?.toString() ?? "", password: form.get("password")?.toString() ?? "" };
+
+  const { error } = Auth.Validation(Schema.Login, Auth.ParseForm<typeof Schema.Login._output>(form));
   if (error) return { error, values };
 
   try {
-    const result = await fetch(`${baseUrl}/api/login`, {
+    const result = await fetch(`${baseUrl}/api/auth/login`, {
       headers: { "Content-Type": "application/json" },
       method: "POST",
       body: JSON.stringify(values),

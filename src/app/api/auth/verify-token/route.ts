@@ -10,7 +10,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     const payload = await JWT.verify<{ id_user: string; role: string }>(token);
     if (!payload) return NextResponse.json({ message: "Token tidak valid" }, { status: 401 });
 
-    const session = await Prisma.sessions.findUnique({ where: { token: refreshToken },  include: { user: true } });
+    const session = await Prisma.sessions.findFirst({ where: { token: refreshToken },  include: { user: true } });
     if (!session || !session.expires_at || new Date() > session.expires_at) return NextResponse.json({ message: "Sesi tidak valid" }, { status: 401 });
     if (session.id_user !== payload.id_user) return NextResponse.json({ message: "Token tidak cocok dengan sesi" }, { status: 401 });
 

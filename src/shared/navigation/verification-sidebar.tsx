@@ -15,7 +15,7 @@ export default function VerificationSidebar() {
   }, [router, state]);
 
   return (
-    <aside className="fixed top-1/2 left-6 z-30 h-[95svh] w-20 -translate-y-1/2 flex flex-col items-center rounded-xl border-2 border-amber-600 bg-amber-700 p-4 shadow-2xl transition-all duration-300 ease-in-out">
+    <aside className="fixed top-1/2 left-6 z-30 flex h-[95svh] w-20 -translate-y-1/2 flex-col items-center rounded-xl border-2 border-amber-600 bg-amber-700 p-4 shadow-2xl transition-all duration-300 ease-in-out">
       <section className="mb-4">
         <Image
           src="/favicon.ico"
@@ -25,14 +25,12 @@ export default function VerificationSidebar() {
           className="rounded-full"
         />
       </section>
-      <section className="flex flex-grow flex-col items-center justify-center space-y-6">
-        <div className="text-white">
-          <UserCheck size={24} />
-        </div>
+      <section className="flex flex-grow flex-col items-center justify-center space-y-6 text-white">
+        <UserCheck size={24} />
       </section>
       <form action={action} className="mt-4">
-        <button 
-          type="submit" 
+        <button
+          type="submit"
           className="text-white transition hover:text-red-400"
           title="Keluar"
         >

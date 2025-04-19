@@ -1,6 +1,8 @@
 import { JWTPayload, SignJWT, jwtVerify } from "jose";
 
-const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || "supersecretkey");
+const JWT_SECRET = new TextEncoder().encode(
+  process.env.JWT_SECRET || "supersecretkey",
+);
 
 export class JWT {
   static async sign(payload: JWTPayload): Promise<string> {
@@ -8,15 +10,15 @@ export class JWT {
   }
 
   static async validate(origin: string, token: string, refreshToken: string) {
-    const res = await fetch(`${origin}/api/verify-token`, {
+    const response = await fetch(`${origin}/api/auth/verify-token`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token, refreshToken }),
     });
 
-    if (!res.ok) throw new Error("Gagal untuk memvalidasi token!");
+    if (!response.ok) throw new Error("Gagal untuk memvalidasi token!");
 
-    const { role } = await res.json();
+    const { role } = await response.json();
     const payload = await JWT.verify<{ id_user: string; role: string }>(token);
     if (payload?.role !== role) throw new Error("Peran Anda tidak valid.");
     return role;

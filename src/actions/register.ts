@@ -1,12 +1,13 @@
 "use server";
 
-import { Auth } from "@/controllers/auth";
+import { headers } from "next/headers";
 import { Auth as Utils } from "@/utils/auth";
 import { Schema } from "@/utils/schema";
 import { Role } from "@/types/auth";
 
 export async function Register(_prev: { error?: Record<string, string>, redirect?: string; values?: Record<string, string> }, form: FormData): Promise<{ error?: Record<string, string>, redirect?: string, values?: Record<string, string> }> {
   const { data, error } = Utils.Validation(Schema.Register, Utils.ParseForm<typeof Schema.Register._output>(form));
+
   const values = {
     username: form.get("username")?.toString() ?? "",
     email: form.get("email")?.toString() ?? "",
@@ -18,13 +19,15 @@ export async function Register(_prev: { error?: Record<string, string>, redirect
   if (error) return { error, values };
 
   try {
-    await Auth.Register({
-      username: data!.username,
-      email: data!.email,
-      password: data!.password,
-      confirm_password: data!.confirm_password,
-      role: form.get("role") as Role,
+    const baseUrl = `${process.env.NODE_ENV === "production" ? "https" : "http"}://${(await headers()).get("host")}`;
+    const response = await fetch(`${baseUrl}/api/auth/register`, {
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify({ ...data, role: data!.role as Role }),
     });
+
+    const result = await response.json();
+    if (!response.ok) return { error: { form: result.message ?? "Terjadi kesalahan saat mendaftarkan akun Anda." }, values };
 
     return { redirect: "/login" };
   } catch (error) {

@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import Auth from "@/app/auth";
+import Providers from "@/app/providers";
 import "@/app/globals.css";
-import Providers from "./providers";
 
 const fonts = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -12,12 +12,8 @@ const fonts = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   icons: "/favicon.ico",
   metadataBase: new URL("https://farmverse.vercel.app/"),
-  openGraph: {
-    images: "/favicon.ico",
-  },
-  twitter: {
-    images: "/favicon.ico",
-  },
+  openGraph: { images: "/favicon.ico" },
+  twitter: { images: "/favicon.ico" },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

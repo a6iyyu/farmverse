@@ -8,7 +8,9 @@ const nextConfig: NextConfig = {
   },
   pageExtensions: ["md", "mdx", "ts", "tsx"],
   reactStrictMode: true,
-  turbopack: {},
+  turbopack: {
+    resolveExtensions: [".mdx", ".tsx", ".ts", ".jsx", ".js", ".mjs", ".json"],
+  },
 };
 
 const withMDX = createMDX({});

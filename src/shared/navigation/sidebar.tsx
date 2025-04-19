@@ -2,10 +2,11 @@ import { useRouter } from "next/navigation";
 import { useActionState, useEffect } from "react";
 import { Home, Package, Users, LogOut } from "lucide-react";
 import { Logout } from "@/actions/logout";
+import Form from "next/form";
 import Image from "next/image";
 
 export default function Sidebar() {
-  const [state, action] = useActionState(Logout, { message: "", redirect: "" });
+  const [state, action] = useActionState(Logout, { oauth: false, redirect: "" });
   const router = useRouter();
 
   useEffect(() => {
@@ -34,11 +35,11 @@ export default function Sidebar() {
           <Users size={24} />
         </button>
       </section>
-      <form action={action} className="mt-4">
+      <Form action={action} className="mt-4">
         <button type="submit" className="text-white transition hover:text-red-400">
           <LogOut size={20} />
         </button>
-      </form>
+      </Form>
     </aside>
   );
 }

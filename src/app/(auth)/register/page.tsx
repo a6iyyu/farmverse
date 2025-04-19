@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { Carousel } from "@/components/auth/carousel";
 import { Register as Form } from "@/components/auth/register";
 
+// prettier-ignore
 export const metadata: Metadata = {
   title: "Daftar",
   description: "Bergabunglah dengan Farmverse dan jadilah bagian dari revolusi agrikultur. Daftarkan dirimu untuk memulai perjalananmu dalam agrikultur yang berkelanjutan.",

@@ -74,3 +74,4 @@ dist
 .webpack/
 .svelte-kit
 prisma/app
+migrations/

@@ -1,12 +1,10 @@
-import { PrismaClient } from "./app";
 import { hashSync } from "bcrypt";
-
-const prisma = new PrismaClient();
+import { Prisma } from "@/utils/prisma";
 
 async function seed() {
-  await prisma.sessions.deleteMany();
-  await prisma.users.deleteMany();
-  await prisma.users.createMany({
+  await Prisma.sessions.deleteMany();
+  await Prisma.users.deleteMany();
+  await Prisma.users.createMany({
     data: [
       {
         id_user: "550e8400-e29b-41d4-a716-446655440000",
@@ -50,5 +48,5 @@ seed()
     process.exit(1);
   })
   .finally(async () => {
-    await prisma.$disconnect();
+    await Prisma.$disconnect();
   });

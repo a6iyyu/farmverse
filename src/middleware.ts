@@ -1,167 +1,57 @@
 import { NextRequest, NextResponse } from "next/server";
-import { JWT } from "@/utils/jwt";
 import { getToken } from "next-auth/jwt";
+import { JWT } from "@/utils/jwt";
+import { Role } from "@/types/auth";
 
-const publicRoutes = [
-  "/",
-  "/about",
-  "/blog",
-  "/service",
-  "/support",
-  "/partners",
-  "/career",
-];
+const publicRoutes: string[] = ["/", "/about", "/blog", "/service", "/support", "/partners", "/career"];
+const roleRoutes: Record<string, string> = { ADMIN: "/admin", BANK: "/bank", CUSTOMER: "/customer", FARMER: "/farmer" };
+
+function isRouteMatch(url: string, routes: string[]) {
+  return routes.some(route => url === route || url.startsWith(`${route}/`));
+}
+
+async function getUserRole(request: NextRequest) {
+  const session = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+  if (session?.role) return session?.role;
+
+  const token = request.cookies.get("access_token")?.value;
+  const refreshToken = request.cookies.get("refresh_token")?.value;
+
+  if (token && refreshToken) return await JWT.validate(request.nextUrl.origin, token, refreshToken);
+  return null;
+}
 
 export async function middleware(request: NextRequest) {
   const url: string = request.nextUrl.pathname;
-  
-  const isPublicRoute = publicRoutes.some(route => 
-    url === route || url.startsWith(`${route}/`)
-  );
-  
-  if (isPublicRoute) {
-    return NextResponse.next();
-  }
 
-  const session = await getToken({
-    req: request,
-    secret: process.env.NEXTAUTH_SECRET,
+  if (isRouteMatch(url, publicRoutes)) return NextResponse.next();
+
+  const role: Role = await getUserRole(request).catch((error) => {
+    console.error(process.env.NODE_ENV !== "production" && `[Middleware Error]: ${error}`);
+    return null;
   });
 
-  const refreshToken: string | undefined = request.cookies.get("refresh_token")?.value;
-  const token: string | undefined = request.cookies.get("access_token")?.value;
+  if (isRouteMatch(url, ["/login", "/register"])) {
+    if (!role) return NextResponse.next();
+    const redirectUrl: string = role === "UNKNOWN" ? "/verify" : roleRoutes[role] || "/";
+    return NextResponse.redirect(new URL(redirectUrl, request.url));
+  }
 
-  const verificationUrl = "/verify";
-  const loginUrl = "/login";
-  const registerUrl = "/register";
-  
-  const roleRoutes: Record<string, string> = {
-    ADMIN: "/admin",
-    BANK: "/bank",
-    CUSTOMER: "/customer",
-    FARMER: "/farmer",
-  };
-
-  if ([loginUrl, registerUrl].includes(url)) {
-    if (session || (token && refreshToken)) {
-      try {
-        let role;
-
-        if (session) {
-          role = session.role;
-        } else if (token && refreshToken) {
-          role = await JWT.validate(
-            request.nextUrl.origin,
-            token,
-            refreshToken,
-          );
-        }
-
-        if (role === "UNKNOWN") {
-          return NextResponse.redirect(new URL(verificationUrl, request.url));
-        } else if (roleRoutes[role]) {
-          return NextResponse.redirect(new URL(roleRoutes[role], request.url));
-        }
-      } catch (error) {
-        console.error(
-          process.env.NODE_ENV !== "production" && `[Middleware Error]: ${error}`,
-        );
-        
-        const response = NextResponse.next();
-        response.cookies.delete("access_token");
-        response.cookies.delete("refresh_token");
-        return response;
-      }
-    }
-    
+  if (url === "/verify") {
+    if (!role) return NextResponse.redirect(new URL("/login", request.url));
+    if (role !== "UNKNOWN" && roleRoutes[role]) return NextResponse.redirect(new URL(roleRoutes[role], request.url));
     return NextResponse.next();
   }
 
-  if (url === verificationUrl) {
-    const isAuthenticated = session || (token && refreshToken);
-    if (!isAuthenticated) {
-      return NextResponse.redirect(new URL(loginUrl, request.url));
-    }
+  if (!role) return NextResponse.redirect(new URL("/login", request.url));
+  if (role === "UNKNOWN") return NextResponse.redirect(new URL("/verify", request.url));
 
-    try {
-      let role;
-      
-      if (session) {
-        role = session.role;
-      } else if (token && refreshToken) {
-        role = await JWT.validate(
-          request.nextUrl.origin,
-          token,
-          refreshToken,
-        );
-      }
-
-      if (role && role !== "UNKNOWN" && roleRoutes[role]) {
-        return NextResponse.redirect(new URL(roleRoutes[role], request.url));
-      }
-      
-      return NextResponse.next();
-    } catch (error) {
-      console.error(
-        process.env.NODE_ENV !== "production" && `[Middleware Error]: ${error}`,
-      );
-      return NextResponse.redirect(new URL(loginUrl, request.url));
-    }
-  }
-
-  const isAuthenticated = session || (token && refreshToken);
-  if (!isAuthenticated) {
-    return NextResponse.redirect(new URL(loginUrl, request.url));
-  }
-
-  try {
-    let role;
-    
-    if (session) {
-      role = session.role;
-    } else if (token && refreshToken) {
-      role = await JWT.validate(
-        request.nextUrl.origin,
-        token, 
-        refreshToken,
-      );
-    }
-
-    if (role === "UNKNOWN") {
-      return NextResponse.redirect(new URL(verificationUrl, request.url));
-    }
-
-    const protectedRoute = Object.values(roleRoutes).some((path) =>
-      url.startsWith(path),
-    );
-    
-    if (protectedRoute) {
-      if (!roleRoutes[role] || !url.startsWith(roleRoutes[role])) {
-        const correctDashboard = roleRoutes[role] ? roleRoutes[role] : "/";
-        return NextResponse.redirect(new URL(correctDashboard, request.url));
-      }
-    }
-    
-    return NextResponse.next();
-  } catch (error) {
-    console.error(
-      process.env.NODE_ENV !== "production" && `[Middleware Error]: ${error}`,
-    );
-    const response = NextResponse.redirect(new URL(loginUrl, request.url));
-    response.cookies.delete("access_token");
-    response.cookies.delete("refresh_token");
-    return response;
-  }
+  const isProtectedRoute: boolean = Object.values(roleRoutes).some(path => url.startsWith(path));
+  if (isProtectedRoute && !url.startsWith(roleRoutes[role])) return NextResponse.redirect(new URL(roleRoutes[role], request.url));
+  return NextResponse.next();
 }
 
+// prettier-ignore
 export const config = {
-  matcher: [
-    "/login",
-    "/register",
-    "/verify",
-    "/admin/:path*",
-    "/bank/:path*",
-    "/customer/:path*",
-    "/farmer/:path*",
-  ],
+  matcher: ["/login", "/register", "/verify", "/admin/:path*", "/bank/:path*", "/customer/:path*", "/farmer/:path*"],
 };

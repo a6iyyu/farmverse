@@ -5,9 +5,10 @@ const config: Config = {
   collectCoverage: true,
   coverageDirectory: "coverage",
   coverageProvider: "v8",
+  moduleNameMapper: {"^@/(.*)$": "<rootDir>/src/$1"},
   preset: "ts-jest",
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   transform: {"^.+\\.(ts|tsx)$": "ts-jest"},
+  testMatch: ['**/__test__/**/*.test.ts?(x)'],
   testEnvironment: "jsdom",
 };
 

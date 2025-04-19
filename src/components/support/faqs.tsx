@@ -35,11 +35,7 @@ export default function FAQs({ showCategory }: { showCategory: string }) {
   return (
     <div className="w-full space-y-4">
       {Questions.filter((faq) => faq.category === showCategory && faq.category !== "Umum").map((faq: IFAQs, index: number) => (
-        <figure
-          key={index}
-          ref={(element) => { question.current[index] = element }}
-          className="border-b border-slate-300 pb-2"
-        >
+        <figure key={index} ref={(element) => { question.current[index] = element }} className="border-b border-slate-300 pb-2">
           <button
             type="button"
             onClick={() => toggleAnswer(index)}

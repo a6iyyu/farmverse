@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "app"
 }
 
 datasource db {
@@ -13,7 +14,7 @@ model users {
   name       String     @db.VarChar(100)
   email      String     @unique @db.VarChar(100)
   password   String?    @db.Char(60)
-  role       Role       @default(UNKNOWN)
+  role       UserRole   @default(UNKNOWN)
   created_at DateTime   @default(now()) @db.Timestamp(0)
   updated_at DateTime   @default(now()) @db.Timestamp(0)
   sessions   sessions[]
@@ -33,6 +34,27 @@ model feedback {
   @@index([email])
 }
 
+model careers {
+  id_career     String            @id @default(uuid()) @db.Char(36)
+  title         String            @db.VarChar(255)
+  department    CareerDepartment
+  description   String            @db.LongText
+  requirements  String?           @db.LongText
+  status        CareerStatus
+  type          CareerType
+  min_salary    Int?
+  max_salary    Int?
+  location      CareerLocation
+  deadline      DateTime
+  deleted       Boolean           @default(false)
+  created_at    DateTime          @default(now()) @db.Timestamp(0)
+  updated_at    DateTime          @default(now()) @db.Timestamp(0)
+
+  @@index([status])
+  @@index([type])
+  @@index([location])
+}
+
 model sessions {
   id_session String    @id @default(uuid()) @db.Char(36)
   id_user    String    @db.Char(36)
@@ -45,7 +67,36 @@ model sessions {
   @@index([id_user])
 }
 
-enum Role {
+enum CareerDepartment {
+  AGRICULTURE
+  DESIGN
+  EDUCATION
+  FINANCE
+  MARKETING
+  OPERATIONS
+  RESEARCH
+  SUPPORT
+  TECHNOLOGY
+}
+
+enum CareerLocation {
+  ONSITE        @map("ON-SITE")
+  HYBRID
+  REMOTE
+}
+
+enum CareerStatus {
+  OPEN
+  CLOSE
+}
+
+enum CareerType {
+  FULL_TIME     @map("FULL TIME")
+  PART_TIME     @map("PART TIME")
+  INTERNSHIP
+}
+
+enum UserRole {
   ADMIN
   BANK
   CUSTOMER

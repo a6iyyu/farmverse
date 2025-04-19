@@ -8,7 +8,7 @@ export default function Hero() {
       <Image
         height={1000}
         width={1000}
-        src="/service/latar-belakang.png"
+        src="/latar-belakang.png"
         alt="Latar Belakang"
         className="absolute top-8 -z-10 h-120 w-120 object-cover lg:-top-10 lg:-right-60 lg:h-200 lg:w-200"
         loading="lazy"

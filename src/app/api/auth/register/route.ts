@@ -1,12 +1,18 @@
 import { NextResponse } from "next/server";
 import { Prisma } from "@/utils/prisma";
 import { hash } from "bcrypt";
-import { Role } from "@/types/auth";
+import { Register, Role } from "@/types/auth";
 
 export async function POST(request: Request): Promise<NextResponse> {
   try {
-    const { username, email, password, confirm_password, role } = await request.json();
+    const body: Register = await request.json();
+    const username = body.data.username;
+    const email = body.data.email;
+    const password = body.data.password;
+    const confirm_password = body.confirm_password;
+    const role = body.data.role;
     const existingUser = await Prisma.users.findFirst({ where: { OR: [{ email }, { username }] } });
+
     if (!["ADMIN", "BANK", "CUSTOMER", "FARMER"].includes(role)) return NextResponse.json({ message: "Peran Anda tidak valid!" }, { status: 400 });
     if (password !== confirm_password) return NextResponse.json({ message: "Konfirmasi kata sandi tidak sesuai!" }, { status: 400 });
     if (existingUser) return NextResponse.json({ message: "Pengguna sudah ada!" }, { status: 400 });

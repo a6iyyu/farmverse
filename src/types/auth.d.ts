@@ -2,7 +2,9 @@ type Role = "ADMIN" | "BANK" | "CUSTOMER" | "FARMER" | "UNKNOWN";
 
 interface Auth {
   id_user: string;
+  username: string;
   email: string;
+  password: string;
   role: Role;
 }
 
@@ -12,11 +14,12 @@ interface Token {
 }
 
 export interface Login {
-  message: string;
   data: Auth & Token;
+  message: string;
 }
 
 export interface Register {
-  message: string;
   data: Auth & { username: string };
+  message: string;
+  confirm_password: string;
 }

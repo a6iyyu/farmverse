@@ -8,7 +8,7 @@ export default function Hero({ redirectSection }: { redirectSection: () => void 
       <Image
         height={1000}
         width={1000}
-        src="/support/latar-belakang.png"
+        src="/latar-belakang.png"
         alt="Latar Belakang"
         className="absolute -top-8 -z-10 h-160 w-160 object-cover lg:-top-14"
         loading="lazy"

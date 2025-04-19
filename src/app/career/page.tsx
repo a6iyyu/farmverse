@@ -1,18 +1,25 @@
 import { Metadata } from "next";
+import Client from "@/app/career/client";
+import DaftarLowonganPekerjaan from "@/components/career/daftar-lowongan-pekerjaan";
 
 export const metadata: Metadata = {
-  title: "Karir",
+  title: "Karier",
   description: "",
   openGraph: {
-    title: "Karir",
+    title: "Karier",
     description: "",
   },
   twitter: {
-    title: "Karir",
+    title: "Karier",
     description: "",
   },
 };
 
 export default function Career() {
-  return null;
+  return (
+    <>
+      <Client />
+      <DaftarLowonganPekerjaan />
+    </>
+  );
 }

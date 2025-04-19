@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import Client from "./client";
+import Client from "@/app/about/client";
 
 // prettier-ignore
 export const metadata: Metadata = {

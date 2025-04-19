@@ -3,15 +3,19 @@ import { compare } from "bcrypt";
 import { getRandomValues } from "crypto";
 import { JWT } from "@/utils/jwt";
 import { Prisma } from "@/utils/prisma";
+import { Login } from "@/types/auth";
 
 export async function POST(request: Request): Promise<NextResponse> {
   try {
-    const { email, password } = await request.json();
+    const body: Login = await request.json();
+    const email = body.data.email;
+    const password = body.data.password;
     if (!email || !password) return NextResponse.json({ message: !email ? "Email diperlukan!" : "Kata sandi diperlukan!" }, { status: 400 });
 
     const user = await Prisma.users.findUnique({ where: { email } });
     if (!user) return NextResponse.json({ message: "Akun Anda tidak ditemukan!" }, { status: 401 });
-    if (!(await compare(password, user.password))) return NextResponse.json({ message: "Kata sandi yang Anda masukkan salah!" }, { status: 401 });
+    if (!user.password) return NextResponse.json({ message: "Akun Anda tidak memiliki kata sandi. Silakan hubungi administrator." }, { status: 401 });
+    if (!(await compare(password, user?.password))) return NextResponse.json({ message: "Kata sandi yang Anda masukkan salah!" }, { status: 401 });
 
     const accessToken = await JWT.sign({ id_user: user.id_user, role: user.role });
     const refreshToken = Array.from(getRandomValues(new Uint8Array(32))).map((b) => b.toString(16).padStart(2, "0")).join("");
